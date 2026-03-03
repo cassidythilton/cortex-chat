@@ -19,6 +19,12 @@
 
 ![Cortex Chat — Landing Page](public/static/01-landing-page.png)
 
+### ▶️ Demo
+
+<video src="https://github.com/cassidythilton/cortex-chat/raw/main/public/static/CortexAnalystDemo.mp4" controls width="100%"></video>
+
+> *Ask a question in natural language → Cortex Analyst generates SQL → results rendered as interactive tables and charts — all within Domo.*
+
 ---
 
 ## Table of Contents
