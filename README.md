@@ -3,7 +3,7 @@
 > **Conversational analytics interface for Snowflake Cortex Analyst.** Ask questions in natural language, get SQL-generated results — rendered as interactive tables and charts, all governed within the Domo platform.
 
 ![version](https://img.shields.io/badge/version-0.0.2-brightgreen)
-![platform](https://img.shields.io/badge/platform-Domo_Custom_App-333333?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABPSURBVDhPY/wPBAxUBExAzEJNjf+BmImaGv8DMRMuNQxQjFUNIx41/6GYcTCpYSRkIjmAiZoaGZE1MlFTIyOyRkZqakQ2kQlq4n+oGgYGAJ2dCh5bsHMFAAAAAElFTkSuQmCC)
+![platform](https://img.shields.io/badge/platform-Domo_Custom_App-333333)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 &nbsp;
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
@@ -25,16 +25,18 @@
 
 1. [What Problem Does This Solve?](#what-problem-does-this-solve)
 2. [Architecture](#architecture)
-3. [Key Capabilities](#key-capabilities)
-4. [Code Engine — Backend Functions](#code-engine--backend-functions)
-5. [Security Model](#security-model)
-6. [Screenshots & UI Tour](#screenshots--ui-tour)
-7. [Data Persistence](#data-persistence)
-8. [Getting Started](#getting-started)
-9. [Available Scripts](#available-scripts)
-10. [Project Structure](#project-structure)
-11. [Tech Stack](#tech-stack)
-12. [License](#license)
+3. [Conversational Query Interface](#-conversational-query-interface)
+4. [Data Visualization](#-data-visualization)
+5. [Query Management](#-query-management)
+6. [Code Engine — Backend Functions](#code-engine--backend-functions)
+7. [Security Model](#security-model)
+8. [Configuration & UX](#-configuration--ux)
+9. [Dark Mode](#-dark-mode)
+10. [Data Persistence](#data-persistence)
+11. [Getting Started](#getting-started)
+12. [Project Structure](#project-structure)
+13. [Tech Stack](#tech-stack)
+14. [License](#license)
 
 ---
 
@@ -42,7 +44,7 @@
 
 Business teams need answers from data — fast. Traditional BI workflows require SQL expertise, dashboard navigation, or waiting for analyst queues. Snowflake's **Cortex Analyst** solves the NL-to-SQL translation problem, but it needs a purpose-built application layer. Domo provides app hosting and governance, but has no native bridge to Cortex Analyst.
 
-**Cortex Chat** closes that gap by combining **three capabilities**:
+**Cortex Chat** closes that gap by combining **five capabilities**:
 
 | Signal | Source | Question It Answers | Status |
 |---|---|---|---|
@@ -51,6 +53,10 @@ Business teams need answers from data — fast. Traditional BI workflows require
 | ![Data Viz](https://img.shields.io/badge/Data_Visualization-AG_Grid_+_Plotly-0084D0) | AG Grid + Plotly.js | *"Show me this as a chart with time aggregation"* | ![status](https://img.shields.io/badge/status-live-brightgreen) |
 | ![Conversation Memory](https://img.shields.io/badge/Conversation_Memory-Multi--turn-764ABC) | Redux + Code Engine | *"Now break that down by quarter"* (follow-up) | ![status](https://img.shields.io/badge/status-live-brightgreen) |
 | ![Config](https://img.shields.io/badge/Self--Service_Config-In--App-blue) | Domo Datastores | *"Can I point this at a different Snowflake schema?"* | ![status](https://img.shields.io/badge/status-live-brightgreen) |
+
+Users just type a question — the rest is handled end-to-end:
+
+![Ask a Question — Natural language input](public/static/03-ask-question.png)
 
 ---
 
@@ -99,9 +105,7 @@ Business teams need answers from data — fast. Traditional BI workflows require
 
 ---
 
-## Key Capabilities
-
-### 🗣️ Conversational Query Interface
+## 🗣️ Conversational Query Interface
 
 | Feature | Description | Status |
 |---|---|---|
@@ -111,7 +115,19 @@ Business teams need answers from data — fast. Traditional BI workflows require
 | Processing Animation | Step-by-step overlay: Connect → Analyze → Generate SQL → Execute | ![live](https://img.shields.io/badge/-live-brightgreen) |
 | Analyst Interpretation | Shows Cortex Analyst's understanding of the question before results | ![live](https://img.shields.io/badge/-live-brightgreen) |
 
-### 📊 Data Visualization
+When a user submits a question, a step-by-step animation tracks progress through the pipeline — connecting to Snowflake, analyzing the question with Cortex Analyst, generating SQL, and executing:
+
+![Processing Animation — Connect → Analyze → Generate SQL → Execute](public/static/04-processing-animation.png)
+
+Once complete, the analyst interpretation and generated SQL appear inline in the chat — the user sees *exactly* how their question was understood:
+
+![Analyst Response — Cortex Analyst interprets the question and displays generated SQL](public/static/06-analyst-response.png)
+
+---
+
+## 📊 Data Visualization
+
+Results render in three switchable views — **Table**, **Chart**, and **Details** — each purpose-built for different workflows:
 
 | View | Technology | Capabilities | Status |
 |---|---|---|---|
@@ -119,7 +135,27 @@ Business teams need answers from data — fast. Traditional BI workflows require
 | ![Chart](https://img.shields.io/badge/Chart-Plotly.js-3F4F75) | Plotly.js | Auto chart-type detection (line vs bar), multi-axis, Y-column selection, time aggregation (daily/weekly/monthly/yearly) | ![live](https://img.shields.io/badge/-live-brightgreen) |
 | ![Details](https://img.shields.io/badge/Details-Audit_Trail-gray) | React | Question, analyst response, generated SQL, column schema, row count | ![live](https://img.shields.io/badge/-live-brightgreen) |
 
-### 🔄 Query Management
+### Table View
+
+Full AG Grid with enterprise-grade data interaction — sort any column, filter, paginate, select cell text, and export to CSV:
+
+![Table Results — AG Grid with sorting, filtering, pagination, CSV export](public/static/07-table-results.png)
+
+### Chart View
+
+Plotly.js automatically detects the optimal chart type (line for time-series, bar for categorical). Users can toggle Y-axis columns and apply time aggregation:
+
+![Chart View — Plotly.js with auto-detection, multi-axis, time aggregation](public/static/08-chart-view.png)
+
+### Details View
+
+A complete audit trail for every query — the original question, Cortex Analyst's interpretation, the generated SQL, column schema, and result count:
+
+![Query Details — Full audit trail: question, analyst response, SQL, results summary](public/static/09-query-details.png)
+
+---
+
+## 🔄 Query Management
 
 | Feature | Description | Status |
 |---|---|---|
@@ -128,15 +164,13 @@ Business teams need answers from data — fast. Traditional BI workflows require
 | Query Deletion | Delete individual queries with confirmation modal | ![live](https://img.shields.io/badge/-live-brightgreen) |
 | Auto-Pruning | Automatically retains only the 50 most recent queries | ![live](https://img.shields.io/badge/-live-brightgreen) |
 
-### ⚙️ Configuration & UX
+The right-hand sidebar shows the 10 most recent queries. Click any query to re-execute its SQL and view fresh results — or use the play button to rerun inline:
 
-| Feature | Description | Status |
-|---|---|---|
-| In-App Config Panel | Set Snowflake database, schema, role, warehouse, semantic view | ![live](https://img.shields.io/badge/-live-brightgreen) |
-| Connection Status Bar | Real-time indicator showing active Snowflake configuration | ![live](https://img.shields.io/badge/-live-brightgreen) |
-| Dark / Light Theme | Toggle with `localStorage` persistence | ![live](https://img.shields.io/badge/-live-brightgreen) |
-| Keyboard Shortcuts | `Enter` to send, `Escape` to close modals | ![live](https://img.shields.io/badge/-live-brightgreen) |
-| Error Handling | Retry logic with exponential backoff for transient failures | ![live](https://img.shields.io/badge/-live-brightgreen) |
+![Recent Queries — History with one-click rerun, delete, and result viewing](public/static/10-recent-queries.png)
+
+Rerunning a stored query executes the SQL directly against Snowflake — no Cortex Analyst round-trip needed — with results rendered in the same Table/Chart/Details panel:
+
+![Rerun Query — Re-execute stored SQL with loading indicator](public/static/11-rerun-query.png)
 
 ---
 
@@ -168,6 +202,10 @@ The backend runs as a **Domo Code Engine** package — serverless Node.js functi
 
 Re-executes a previously generated SQL statement against Snowflake without calling Cortex Analyst. Powers the **Rerun Query** feature.
 
+Here's the full results panel showing Table/Chart/Details tabs with the query context at the top:
+
+![Results Panel — Tabbed view with question context, table, chart, and details](public/static/12-results-panel.png)
+
 ---
 
 ## Security Model
@@ -182,128 +220,39 @@ Re-executes a previously generated SQL statement against Snowflake without calli
 
 ---
 
-## Screenshots & UI Tour
+## ⚙️ Configuration & UX
 
-### Light Mode
+| Feature | Description | Status |
+|---|---|---|
+| In-App Config Panel | Set Snowflake database, schema, role, warehouse, semantic view | ![live](https://img.shields.io/badge/-live-brightgreen) |
+| Connection Status Bar | Real-time indicator showing active Snowflake configuration | ![live](https://img.shields.io/badge/-live-brightgreen) |
+| Dark / Light Theme | Toggle with `localStorage` persistence | ![live](https://img.shields.io/badge/-live-brightgreen) |
+| Keyboard Shortcuts | `Enter` to send, `Escape` to close modals | ![live](https://img.shields.io/badge/-live-brightgreen) |
+| Error Handling | Retry logic with exponential backoff for transient failures | ![live](https://img.shields.io/badge/-live-brightgreen) |
 
-<table>
-<tr>
-<td width="50%">
+The configuration panel lets users connect to any Snowflake environment — database, schema, role, warehouse, and semantic view — all persisted in Domo Datastores:
 
-**Landing Page** — Verified query suggestions, connection status bar, theme toggle
+![Configuration Panel — Connect to any Snowflake database, schema, warehouse, role, and semantic view](public/static/02-configuration-panel.png)
 
-![Landing](public/static/01-landing-page.png)
+The processing pipeline provides real-time visual feedback as the query moves through each stage:
 
-</td>
-<td width="50%">
+![Processing Query — Generating SQL and executing](public/static/05-processing-query.png)
 
-**Configuration Panel** — Connect to any Snowflake database, schema, warehouse, role, and semantic view
+---
 
-![Config](public/static/02-configuration-panel.png)
+## 🌙 Dark Mode
 
-</td>
-</tr>
-<tr>
-<td>
+Full dark theme support across every surface — chat, tables, charts, configuration, and query details. Toggle via the header button; preference persists in `localStorage`.
 
-**Ask a Question** — Natural language input with send button and helper text
+![Dark Mode — Landing page with verified query suggestions](public/static/13-dark-mode-landing.png)
 
-![Ask](public/static/03-ask-question.png)
+![Dark Mode — Configuration panel](public/static/14-dark-mode-config.png)
 
-</td>
-<td>
+![Dark Mode — Table results with AG Grid dark theme](public/static/15-dark-mode-results.png)
 
-**Processing Animation** — Step-by-step: Connect → Analyze → Generate SQL → Execute
+![Dark Mode — Chart visualization with Plotly dark theme](public/static/16-dark-mode-chart.png)
 
-![Processing](public/static/04-processing-animation.png)
-
-</td>
-</tr>
-<tr>
-<td>
-
-**Analyst Response** — Cortex Analyst interpretation + generated SQL in chat
-
-![Analyst](public/static/06-analyst-response.png)
-
-</td>
-<td>
-
-**Table Results** — AG Grid: sorting, filtering, pagination, CSV export
-
-![Table](public/static/07-table-results.png)
-
-</td>
-</tr>
-<tr>
-<td>
-
-**Chart View** — Plotly.js with auto-detection, Y-axis selection, time aggregation
-
-![Chart](public/static/08-chart-view.png)
-
-</td>
-<td>
-
-**Query Details** — Audit trail: question, analyst response, SQL, results summary
-
-![Details](public/static/09-query-details.png)
-
-</td>
-</tr>
-<tr>
-<td>
-
-**Recent Queries** — Query history with rerun, delete, and result preview
-
-![Recent](public/static/10-recent-queries.png)
-
-</td>
-<td>
-
-**Rerun Query** — Re-execute stored SQL with loading indicator
-
-![Rerun](public/static/11-rerun-query.png)
-
-</td>
-</tr>
-</table>
-
-### Dark Mode
-
-<table>
-<tr>
-<td width="50%">
-
-![Dark Landing](public/static/13-dark-mode-landing.png)
-
-</td>
-<td width="50%">
-
-![Dark Config](public/static/14-dark-mode-config.png)
-
-</td>
-</tr>
-<tr>
-<td>
-
-![Dark Results](public/static/15-dark-mode-results.png)
-
-</td>
-<td>
-
-![Dark Chart](public/static/16-dark-mode-chart.png)
-
-</td>
-</tr>
-<tr>
-<td colspan="2">
-
-![Dark Details](public/static/17-dark-mode-details.png)
-
-</td>
-</tr>
-</table>
+![Dark Mode — Query details audit trail](public/static/17-dark-mode-details.png)
 
 ---
 
