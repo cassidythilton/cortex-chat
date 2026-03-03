@@ -1,0 +1,65 @@
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--border-primary);
+  margin-bottom: var(--space-lg);
+  transition: all var(--transition-base);
+}
+
+.headerButtons {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.configButton,
+.clearButton {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    background: var(--interactive-hover);
+    border-color: var(--snowflake-blue);
+    color: var(--snowflake-blue);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.configButton.unconfigured {
+  border-color: var(--status-warning);
+  color: var(--status-warning);
+  animation: pulse-warning 2s ease-in-out infinite;
+}
+
+.settingsIcon,
+.clearIcon {
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes pulse-warning {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0);
+  }
+}

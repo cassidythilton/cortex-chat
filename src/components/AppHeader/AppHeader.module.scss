@@ -1,0 +1,98 @@
+.header {
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  background-color: rgba(var(--header-bg-rgb, 255, 255, 255), 0.9);
+}
+
+[data-theme='dark'] .header {
+  background-color: rgba(13, 14, 18, 0.9);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-right: var(--space-lg);
+  border-right: 1px solid var(--border-primary);
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0.9);
+  transition: filter var(--transition-fast);
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+.separator {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--text-tertiary);
+  margin: 0 var(--space-xs);
+}
+
+.title {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+  color: #64748b; // Light gray for light mode
+}
+
+[data-theme='dark'] .title {
+  color: #29b5e8; // Snowflake blue for dark mode
+}
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  padding: 0;
+
+  &:hover {
+    background-color: var(--interactive-hover);
+    color: var(--text-primary);
+    border-color: var(--border-secondary);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

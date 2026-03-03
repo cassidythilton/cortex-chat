@@ -1,0 +1,173 @@
+// AG Grid Modern Theming
+// Override AG Grid Quartz theme for sublime, modern appearance
+
+:global {
+  // Light mode styles
+  .ag-theme-quartz {
+    --ag-background-color: #ffffff;
+    --ag-foreground-color: #1f2937;
+    --ag-border-color: #e5e7eb;
+    --ag-header-background-color: #f8fafc;
+    --ag-header-foreground-color: #0f172a;
+    --ag-odd-row-background-color: #f9fafb;
+    --ag-row-hover-color: #eff6ff;
+    --ag-selected-row-background-color: #dbeafe;
+    --ag-input-border-color: #d1d5db;
+    --ag-input-focus-border-color: #29b5e8;
+    --ag-row-border-color: #f1f5f9;
+
+    // Modern spacing and borders
+    .ag-header {
+      border-bottom: 2px solid #e2e8f0;
+      background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%);
+    }
+
+    .ag-header-cell {
+      padding: 14px 18px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    .ag-header-cell-label {
+      font-weight: 600;
+    }
+
+    .ag-row {
+      border-bottom: 1px solid var(--ag-row-border-color);
+
+      &:hover {
+        background-color: var(--ag-row-hover-color) !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        transition: all 0.15s ease;
+      }
+    }
+
+    .ag-cell {
+      padding: 16px 18px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #334155;
+    }
+
+    // Alternating row colors for better readability with rotating gray shades
+    .ag-row-even {
+      background-color: #ffffff;
+    }
+
+    .ag-row-odd {
+      background-color: #f8f9fa;
+    }
+
+    // Every 4th row gets a slightly darker shade for professional rotating effect
+    .ag-row:nth-child(4n) {
+      background-color: #f3f4f6;
+    }
+  }
+
+  // Dark mode styles
+  .ag-theme-quartz-dark {
+    --ag-background-color: #0f1117;
+    --ag-foreground-color: #e5e7eb;
+    --ag-border-color: #1f2330;
+    --ag-header-background-color: #1a1d25;
+    --ag-header-foreground-color: #f9fafb;
+    --ag-odd-row-background-color: #14161d;
+    --ag-row-hover-color: #1f2937;
+    --ag-selected-row-background-color: #1e3a4a;
+    --ag-input-border-color: #2a2f3d;
+    --ag-input-focus-border-color: #29b5e8;
+    --ag-control-panel-background-color: #1a1d25;
+    --ag-subheader-background-color: #1a1d25;
+    --ag-row-border-color: #1a1d25;
+
+    // Modern spacing and borders
+    .ag-header {
+      border-bottom: 2px solid #2d3748;
+      background: linear-gradient(to bottom, #1a1d25 0%, #161920 100%);
+    }
+
+    .ag-header-cell {
+      padding: 14px 18px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .ag-header-cell-label {
+      font-weight: 600;
+    }
+
+    .ag-row {
+      border-bottom: 1px solid var(--ag-row-border-color);
+
+      &:hover {
+        background-color: var(--ag-row-hover-color) !important;
+        box-shadow: 0 1px 3px rgba(41, 181, 232, 0.12);
+        transition: all 0.15s ease;
+      }
+    }
+
+    .ag-cell {
+      padding: 16px 18px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    // Alternating row colors for better readability with rotating gray shades
+    .ag-row-even {
+      background-color: #0f1117;
+    }
+
+    .ag-row-odd {
+      background-color: #14161d;
+    }
+
+    // Every 4th row gets a slightly different shade for professional rotating effect
+    .ag-row:nth-child(4n) {
+      background-color: #1a1d25;
+    }
+
+    // Fix text visibility
+    .ag-cell,
+    .ag-header-cell-label,
+    .ag-paging-page-summary-panel,
+    .ag-paging-row-summary-panel {
+      color: var(--ag-foreground-color);
+    }
+
+    // Pagination controls
+    .ag-paging-button {
+      color: var(--ag-foreground-color);
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
+
+    // Input elements
+    .ag-input-field-input,
+    .ag-picker-field-wrapper {
+      background-color: #1f2330;
+      border-color: var(--ag-input-border-color);
+      color: var(--ag-foreground-color);
+    }
+
+    // Filter panels
+    .ag-filter,
+    .ag-menu {
+      background-color: var(--ag-control-panel-background-color);
+      border-color: var(--ag-border-color);
+    }
+
+    // Icons
+    .ag-icon {
+      color: var(--ag-foreground-color);
+    }
+  }
+}

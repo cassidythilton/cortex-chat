@@ -1,0 +1,133 @@
+.chatInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  border: 1px solid var(--card-border);
+  transition: all var(--transition-base);
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.inputWrapper {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: stretch;
+}
+
+.chatInput {
+  flex: 1;
+  padding: 16px 20px;
+  border: 2px solid var(--input-border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  outline: none;
+  transition: all var(--transition-fast);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-family: inherit;
+
+  &::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  &:focus {
+    border-color: var(--snowflake-blue);
+    box-shadow: 0 0 0 3px rgba(41, 181, 232, 0.12);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: var(--interactive-disabled);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(2, 136, 209, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(2, 136, 209, 0);
+  }
+}
+
+.helperText {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.sendButton {
+  padding: 16px 24px;
+  background: linear-gradient(
+    135deg,
+    var(--snowflake-blue),
+    var(--snowflake-dark-blue)
+  );
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(41, 181, 232, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-width: 64px;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(41, 181, 232, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--interactive-disabled);
+    box-shadow: none;
+  }
+}
+
+.sendIcon,
+.spinIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.spinIcon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

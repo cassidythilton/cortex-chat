@@ -1,0 +1,175 @@
+{
+  "name": "Cortex Chatbot",
+  "version": "1.1.0",
+  "size": {
+    "width": 4,
+    "height": 3
+  },
+  "datasetsMapping": [],
+  "packageMapping": [
+    {
+      "alias": "callAnalyst",
+      "parameters": [
+        {
+          "alias": "message",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "view",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "database",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "schema",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "role",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "warehouse",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "conversationHistory",
+          "type": "object",
+          "nullable": true,
+          "isList": true,
+          "children": null
+        }
+      ],
+      "output": {
+        "alias": "sql",
+        "type": "string",
+        "children": null
+      }
+    },
+    {
+      "alias": "executeStoredSql",
+      "parameters": [
+        {
+          "alias": "sql",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "database",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "schema",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "role",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        },
+        {
+          "alias": "warehouse",
+          "type": "string",
+          "nullable": false,
+          "isList": false,
+          "children": null
+        }
+      ],
+      "output": {
+        "alias": "result",
+        "type": "object",
+        "children": null
+      }
+    }
+  ],
+  "collectionsMapping": [
+    {
+      "name": "configuration",
+      "schema": {
+        "columns": [
+          {
+            "name": "snowflake_warehouse",
+            "type": "STRING"
+          },
+          {
+            "name": "snowflake_database",
+            "type": "STRING"
+          },
+          {
+            "name": "snowflake_schema",
+            "type": "STRING"
+          },
+          {
+            "name": "snowflake_role",
+            "type": "STRING"
+          },
+          {
+            "name": "snowflake_view",
+            "type": "STRING"
+          }
+        ]
+      }
+    },
+    {
+      "name": "recent_queries",
+      "schema": {
+        "columns": [
+          {
+            "name": "query_text",
+            "type": "STRING"
+          },
+          {
+            "name": "sql_generated",
+            "type": "STRING"
+          },
+          {
+            "name": "result_columns",
+            "type": "STRING"
+          },
+          {
+            "name": "result_row_count",
+            "type": "LONG"
+          },
+          {
+            "name": "created_at",
+            "type": "STRING"
+          },
+          {
+            "name": "analyst_message",
+            "type": "STRING"
+          }
+        ]
+      }
+    }
+  ]
+}

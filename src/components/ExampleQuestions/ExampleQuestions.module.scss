@@ -1,0 +1,68 @@
+.container {
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--snowflake-blue);
+  stroke-width: 2.5;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: block;
+  position: relative;
+
+  &:hover {
+    background: var(--interactive-hover);
+    border-color: var(--snowflake-blue);
+    box-shadow: 0 2px 8px rgba(41, 181, 232, 0.15);
+
+    .question {
+      color: var(--text-primary);
+    }
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.question {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+  transition: color var(--transition-fast);
+  font-weight: 400;
+}

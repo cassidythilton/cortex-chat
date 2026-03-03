@@ -1,0 +1,241 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-primary);
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+}
+
+.snowflakeLogo {
+  width: 32px;
+  height: 32px;
+  color: var(--snowflake-blue);
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  border: 1px solid transparent;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+
+  &.pending {
+    opacity: 0.4;
+
+    .stepIndicator {
+      color: var(--text-tertiary);
+    }
+
+    .stepLabel {
+      color: var(--text-tertiary);
+    }
+  }
+
+  &.active {
+    border-color: var(--snowflake-blue);
+    background: linear-gradient(
+      135deg,
+      rgba(41, 181, 232, 0.05),
+      rgba(41, 181, 232, 0.02)
+    );
+    box-shadow: 0 0 20px rgba(41, 181, 232, 0.15);
+
+    .stepIndicator {
+      color: var(--snowflake-blue);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .stepLabel {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+  }
+
+  &.completed {
+    .stepIndicator {
+      color: var(--status-success);
+    }
+
+    .stepLabel {
+      color: var(--text-secondary);
+    }
+
+    .checkIcon {
+      animation: checkScale 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+}
+
+.stepIndicator {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.stepIcon,
+.checkIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.stepContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.stepLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+  margin-bottom: 2px;
+}
+
+.stepDetail {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-family: var(--font-brand);
+}
+
+.stepProgress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(41, 181, 232, 0.2);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--snowflake-blue);
+  animation: progressSlide 2s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--snowflake-blue);
+}
+
+.footer {
+  text-align: center;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-primary);
+}
+
+.brandingText {
+  font-size: 12px;
+  color: var(--text-tertiary);
+
+  .highlight {
+    color: var(--snowflake-blue);
+    font-weight: 600;
+    font-family: var(--font-brand);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes checkScale {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes progressSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}

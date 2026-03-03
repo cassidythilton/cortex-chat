@@ -1,0 +1,9 @@
+{
+  "your-instance": {
+    "description": "Your Domo instance environment for the app",
+    "manifest": {
+      "id": "YOUR_ASSET_ID",
+      "proxyId": "YOUR_PROXY_ID"
+    }
+  }
+}
