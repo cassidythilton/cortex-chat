@@ -131,10 +131,6 @@ const QueryResultsPanel = ({ queryText, onClose }: QueryResultsPanelProps) => {
     );
   }
 
-  console.log('QueryResultsPanel - currentTableData:', currentTableData);
-  console.log('QueryResultsPanel - rows:', currentTableData.rows?.length);
-  console.log('QueryResultsPanel - columns:', currentTableData.columns);
-
   return (
     <div className={styles.container}>
       <header className={styles.header}>

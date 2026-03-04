@@ -36,7 +36,6 @@ class DomoService {
   async loadConfiguration(): Promise<void> {
     try {
       this.config = await configService.getConfig();
-      console.log('Configuration loaded:', this.config);
     } catch (error) {
       console.error('Error loading configuration:', error);
       this.config = null;
@@ -49,7 +48,6 @@ class DomoService {
 
   clearConversationHistory(): void {
     this.conversationHistory = [];
-    console.log('Conversation history cleared');
   }
 
   getConversationHistory(): ConversationMessage[] {
@@ -58,7 +56,6 @@ class DomoService {
 
   setMockMode(enabled: boolean): void {
     this.useMockData = enabled;
-    console.log('Mock mode:', enabled ? 'enabled' : 'disabled');
   }
 
   isMockMode(): boolean {
@@ -80,8 +77,6 @@ class DomoService {
     sql: string,
     retryCount = 0,
   ): Promise<AnalystResponse> {
-    console.log('Executing stored SQL');
-
     if (!this.config || Object.keys(this.config).length === 0) {
       throw new Error(
         'Configuration not loaded. Please configure the app first.',
@@ -101,11 +96,6 @@ class DomoService {
         warehouse: this.config.snowflake_warehouse,
       };
 
-      console.log('Executing SQL with parameters:', {
-        ...sqlParams,
-        sql: sql.substring(0, 100) + '...',
-      });
-
       // Create a timeout promise
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(() => reject(new Error('Request timeout')), timeoutMs);
@@ -116,11 +106,6 @@ class DomoService {
         this.startFunction('executeStoredSql', sqlParams),
         timeoutPromise,
       ]);
-
-      console.log(
-        'Raw response from executeStoredSql:',
-        JSON.stringify(response, null, 2),
-      );
 
       // Unwrap response if it's wrapped
       let actualResponse: AnalystResponse = response;
@@ -159,11 +144,8 @@ class DomoService {
   }
 
   async sendMessage(message: string, retryCount = 0): Promise<AnalystResponse> {
-    console.log('Sending message to Domo:', message);
-
     // Return mock data if mock mode is enabled
     if (this.useMockData) {
-      console.log('Using mock data response');
       await this.delay(500); // Simulate network delay
       return mockAnalystResponse.sql;
     }
@@ -189,8 +171,6 @@ class DomoService {
         conversationHistory: this.conversationHistory,
       };
 
-      console.log('Calling analyst with parameters:', analystParams);
-
       // Create a timeout promise
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(() => reject(new Error('Request timeout')), timeoutMs);
@@ -202,24 +182,11 @@ class DomoService {
         timeoutPromise,
       ]);
 
-      console.log(
-        'Raw response from callAnalyst:',
-        JSON.stringify(response, null, 2),
-      );
-
       // Unwrap response if it's wrapped in 'sql' property (Domo Code Engine format)
       let actualResponse: AnalystResponse = response;
       if (response && response.sql && typeof response.sql === 'object') {
         actualResponse = response.sql;
       }
-
-      // Enhanced logging for debugging SQL fields
-      console.log('Response SQL fields:', {
-        hasSql: !!actualResponse.sql,
-        hasLogicalSql: !!actualResponse.logicalSql,
-        rowCount: actualResponse.rows?.length,
-        columnCount: actualResponse.columns?.length,
-      });
 
       // Check if response was successful
       if (!actualResponse || !actualResponse.success) {
@@ -231,11 +198,6 @@ class DomoService {
       // Update conversation history if provided
       if (actualResponse.conversationHistory) {
         this.conversationHistory = actualResponse.conversationHistory;
-        console.log(
-          'Conversation history updated:',
-          this.conversationHistory.length,
-          'messages',
-        );
       }
 
       return actualResponse;

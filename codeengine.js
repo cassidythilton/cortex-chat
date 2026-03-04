@@ -403,8 +403,6 @@ async function callAnalystAndGetSql(accessToken, analystBody, retryCount) {
       throw new Error(`Request timeout after ${REQUEST_TIMEOUT_MS}ms`);
     }
 
-    // Log full error details
-    console.error('Full error details:', error);
     throw new Error(`Cortex Analyst error: ${error.message}`);
   }
 }
@@ -495,8 +493,6 @@ async function executeSql(
       throw new Error(`SQL execution timeout after ${REQUEST_TIMEOUT_MS}ms`);
     }
 
-    // Unknown error
-    console.error('SQL execution error details:', error);
     throw new Error(`SQL execution error: ${error.message}`);
   }
 }
@@ -517,22 +513,9 @@ async function executeSql(
  * @returns {Promise<{success: boolean, sql: string, columns: string[], rows: object[]}>}
  */
 async function executeStoredSql(sql, database, schema, role, warehouse) {
-  console.log('executeStoredSql invoked:', {
-    sql: sql ? sql.substring(0, 100) + '...' : null,
-    database,
-    schema,
-    role,
-    warehouse,
-  });
-
   try {
-    // Get access token
-    console.log('Getting access token...');
     const token = await getAccessTokenFromRefresh();
-    console.log('Token obtained');
 
-    // Execute the SQL
-    console.log('Executing stored SQL...');
     const sqlResult = await executeSql(
       token,
       sql,
@@ -541,7 +524,6 @@ async function executeStoredSql(sql, database, schema, role, warehouse) {
       schema,
       role,
     );
-    console.log('SQL execution complete:', sqlResult.rows.length, 'rows');
 
     // Return results without analyst message
     return {
@@ -553,7 +535,6 @@ async function executeStoredSql(sql, database, schema, role, warehouse) {
     };
   } catch (error) {
     console.error('executeStoredSql error:', error.message);
-    console.error('Full error stack:', error.stack);
     return {
       success: false,
       error: error.message,
@@ -582,24 +563,9 @@ async function callAnalyst(
   warehouse,
   conversationHistory,
 ) {
-  console.log('callAnalyst invoked:', {
-    message,
-    view,
-    database,
-    schema,
-    role,
-    warehouse,
-    historyLength: conversationHistory ? conversationHistory.length : 0,
-  });
-
   try {
-    // Get access token
-    console.log('Getting access token...');
     const token = await getAccessTokenFromRefresh();
-    console.log('Token obtained');
 
-    // Build and call Cortex Analyst
-    console.log('Building analyst body...');
     const analystBody = buildAnalystBody(
       message,
       view,
@@ -607,9 +573,7 @@ async function callAnalyst(
       schema,
       conversationHistory,
     );
-    console.log('Analyst body:', JSON.stringify(analystBody, null, 2));
 
-    console.log('Calling Cortex Analyst API...');
     const analystResult = await callAnalystAndGetSql(token, analystBody);
 
     // Build updated conversation history
@@ -624,7 +588,6 @@ async function callAnalyst(
 
     // If no SQL was generated, return just the analyst message
     if (!analystResult.hasSql) {
-      console.log('No SQL generated - returning analyst message only');
       return {
         success: true,
         analyst: analystResult.analyst,
@@ -636,8 +599,6 @@ async function callAnalyst(
     }
 
     // Execute the generated SQL (physical query)
-    console.log('Logical SQL (for display):', analystResult.logicalSql);
-    console.log('Physical SQL (executing):', analystResult.sql);
     const sqlResult = await executeSql(
       token,
       analystResult.sql,
@@ -646,7 +607,6 @@ async function callAnalyst(
       schema,
       role,
     );
-    console.log('SQL execution complete:', sqlResult.rows.length, 'rows');
 
     // Return raw data for frontend to handle
     return {
@@ -660,7 +620,6 @@ async function callAnalyst(
     };
   } catch (error) {
     console.error('callAnalyst error:', error.message);
-    console.error('Full error stack:', error.stack);
     return {
       success: false,
       error: error.message,

@@ -33,18 +33,6 @@ const RecentQueries = () => {
   }, [dispatch]);
 
   const handleQueryClick = async (query: RecentQuery) => {
-    console.log('Query clicked:', query);
-    console.log('Query fields:', {
-      id: query.id,
-      query_text: query.query_text,
-      sql_generated: query.sql_generated,
-      result_columns: query.result_columns,
-      result_row_count: query.result_row_count,
-      created_at: query.created_at,
-      createdOn: query.createdOn,
-      analyst_message: query.analyst_message,
-    });
-
     // Execute the SQL to get the full data and show results panel
     setRunningQueryId(query.id || 'loading');
     try {

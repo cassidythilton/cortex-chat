@@ -203,19 +203,12 @@ const chatSlice = createAppSlice({
         state.isLoadingQueries = false;
       })
       // Save recent query
-      .addCase(saveRecentQuery.pending, () => {
-        console.log('Saving query...');
-      })
       .addCase(saveRecentQuery.fulfilled, (state, action) => {
-        console.log('Query saved to state:', action.payload);
         state.recentQueries.unshift(action.payload);
         // Keep only the 50 most recent
         if (state.recentQueries.length > 50) {
           state.recentQueries = state.recentQueries.slice(0, 50);
         }
-      })
-      .addCase(saveRecentQuery.rejected, (_state, action) => {
-        console.error('Failed to save query to state:', action.error);
       })
       // Delete recent query
       .addCase(deleteRecentQuery.fulfilled, (state, action) => {

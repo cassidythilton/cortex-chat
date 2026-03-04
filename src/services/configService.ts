@@ -40,7 +40,6 @@ class ConfigService {
         this.documentId = response.id;
       }
 
-      console.log('Configuration saved successfully:', response);
       return response;
     } catch (error) {
       console.error('Error saving configuration:', error);

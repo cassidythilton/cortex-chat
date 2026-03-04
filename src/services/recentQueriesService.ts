@@ -82,7 +82,6 @@ const saveQuery = async (
 const deleteQuery = async (queryId: string): Promise<void> => {
   try {
     await recentQueryClient.delete(queryId);
-    console.log('Query deleted successfully:', queryId);
   } catch (error) {
     console.error('Error deleting query:', error);
     throw new Error(`Failed to delete query: ${(error as Error).message}`);
@@ -106,7 +105,6 @@ const clearAllQueries = async (): Promise<void> => {
       }),
     );
 
-    console.log('All queries cleared successfully');
   } catch (error) {
     console.error('Error clearing queries:', error);
     throw new Error(`Failed to clear queries: ${(error as Error).message}`);
@@ -133,9 +131,6 @@ const pruneOldQueries = async (maxQueries = 50): Promise<void> => {
         }),
       );
 
-      console.log(
-        `Pruned ${queriesToDelete.length} old queries from collection`,
-      );
     }
   } catch (error) {
     console.error('Error pruning old queries:', error);

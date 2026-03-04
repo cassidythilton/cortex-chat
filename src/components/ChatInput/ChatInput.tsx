@@ -174,14 +174,9 @@ const ChatInput = () => {
           analyst_message: analystMessage,
         };
 
-        console.log('Saving query to recent queries:', queryToSave);
-
-        // Await the save operation to ensure it completes
+        // Save to recent queries collection
         dispatch(saveRecentQuery(queryToSave))
           .unwrap()
-          .then((savedQuery) => {
-            console.log('Query saved successfully:', savedQuery);
-          })
           .catch((error) => {
             console.error('Failed to save query:', error);
           });

@@ -2,7 +2,7 @@
 
 > **Conversational analytics interface for Snowflake Cortex Analyst.** Ask questions in natural language, get SQL-generated results — rendered as interactive tables and charts, all governed within the Domo platform.
 
-![version](https://img.shields.io/badge/version-0.0.2-brightgreen)
+![version](https://img.shields.io/badge/version-1.1.0-brightgreen)
 ![platform](https://img.shields.io/badge/platform-Domo_Custom_App-333333)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 &nbsp;
@@ -14,6 +14,9 @@
 ![AG Grid](https://img.shields.io/badge/AG_Grid-34-0084D0)
 ![Plotly](https://img.shields.io/badge/Plotly.js-3-3F4F75?logo=plotly&logoColor=white)
 ![SCSS](https://img.shields.io/badge/SCSS_Modules-Sass-CC6699?logo=sass&logoColor=white)
+
+> [!NOTE]
+> **This is a reference implementation** — a working, production-quality example of how to build a conversational AI analytics application on top of Snowflake Cortex Analyst, hosted within the Domo platform. Fork it, adapt it, deploy it.
 
 ---
 
@@ -42,7 +45,8 @@
 11. [Getting Started](#getting-started)
 12. [Project Structure](#project-structure)
 13. [Tech Stack](#tech-stack)
-14. [License](#license)
+14. [Disclaimer](#disclaimer)
+15. [License](#license)
 
 ---
 
@@ -459,8 +463,23 @@ cortex-chat/
 
 ---
 
+## Disclaimer
+
+This application is a **reference implementation** intended for demonstration, learning, and adaptation. It is not an official product of Domo or Snowflake. No warranty is provided — see the [LICENSE](#license) for details.
+
+**Before deploying to production**, review the following:
+
+| Area | Recommendation |
+|---|---|
+| OAuth Credentials | Store client ID, client secret, and refresh token exclusively in Domo's encrypted Accounts system — never in source code or environment files |
+| Snowflake RBAC | Scope the configured Snowflake role to least-privilege access for the target semantic views |
+| Input Sanitization | The chat interface renders some HTML content via `dangerouslySetInnerHTML`; for untrusted environments, add server-side sanitization |
+| Logging | Production builds should suppress verbose logging; this codebase uses minimal `console.error` for failure paths only |
+
+---
+
 ## License
 
-This project is provided as-is for demonstration and reference purposes.
+MIT — see [LICENSE](LICENSE) for details.
 
 ![MIT](https://img.shields.io/badge/license-MIT-blue)
